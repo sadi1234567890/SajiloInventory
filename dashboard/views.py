@@ -43,16 +43,29 @@ def staff(request):
 
 @login_required(login_url='user-login')
 def products(request):
-    items = Product.objects.all()
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
 
     if request.method =='POST':
         form = ProductForm(request.POST)
         if form.is_valid():
             form.save()
             return  redirect('dashboard-products')
-
+    
+    elif request.method == 'GET':
+        items = Product.objects.filter(
+            Q(name__icontains=q) |
+            Q(category__icontains=q)
+        )
+        form = ProductForm()
+        # items = Product.objects.all()
+        context={
+            'items': items,
+            'form': form,
+        }
+        return render(request, 'dashboard/products.html', context)
     else:
         form = ProductForm()
+        items = Product.objects.all()
     context={
         'items': items,
         'form': form,
@@ -88,12 +101,24 @@ def product_update(request, pk):
 
 @login_required(login_url='user-login')
 def orders(request):
-    orders= Order.objects.all()
-    
-    context={
-        'orders': orders,
-    }
-    return render(request, 'dashboard/orders.html', context)
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+
+    if request.method == 'GET':
+        orders = Order.objects.filter(
+            Q(date__icontains=q)
+        )
+        print('new')
+        print(orders)
+        context={
+            'orders': orders,
+        }
+        return render(request, 'dashboard/orders.html', context)
+    else:
+        orders= Order.objects.all()    
+        context={
+            'orders': orders,
+        }
+        return render(request, 'dashboard/orders.html', context)
 
 
 def add_orders(request):
@@ -181,17 +206,30 @@ def add_orders(request):
 
 # def searchProd(request):
 #     q = request.GET.get('q') if request.GET.get('q') != None else ''
+#     print('query')
+#     print(q)
 
-#     products = Product.objects.filter(
-#         Q(name__icontains=q) |
-#         Q(category__icontains=q)
-#     )
+#     if q:
+#         # query = request.GET['q']
+#         items = Product.objects.filter(
+#             Q(name__icontains=q) |
+#             Q(category__icontains=q)
+#         )
+#     elif q == '':
+#         items = Product.objects.all()
 
-#     context = {'products': products}
     
-#     # Add url
-#     return render(request, 'search', context)
+#     print(products)
+#     print('after')
 
+#     form = ProductForm()
+
+#     context = {
+#         'products': items,
+#         'form': form,
+#     }
+    
+#     return render(request, 'dashboard/products.html', context)
 
 # def searchInvoice(request):
 #     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -246,12 +284,18 @@ def qr_scanner(request):
     category = json_data['category']
     unit_price = json_data['unit-price']
 
-    Product.objects.create(
-        name = name,
-        category = category,
-        quantity = quantity,
-        unit_price = unit_price
-    )
+    product = Product.objects.filter(name=name, category=category, unit_price=unit_price).first()
+
+    if product:
+        product.quantity += quantity
+        product.save()
+    else:
+        Product.objects.create(
+            name=name,
+            category=category,
+            quantity=quantity,
+            unit_price=unit_price
+        )
 
     items = Product.objects.all()
     form = ProductForm()

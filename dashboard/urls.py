@@ -17,7 +17,5 @@ urlpatterns = [
     # path('search-invoice', views.searchInvoice, name="search-invoice"),
 
     path('scan-product/', views.qr_scanner, name="scan"),
-
-
 ]
 
