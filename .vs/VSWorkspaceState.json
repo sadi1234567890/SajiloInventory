@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\SajiloInventory",
+    "\\static",
+    "\\templates",
+    "\\templates\\dashboard",
+    "\\templates\\partials"
   ],
+  "SelectedNode": "\\SajiloInventory\\settings.py",
   "PreviewInSolutionExplorer": false
 }

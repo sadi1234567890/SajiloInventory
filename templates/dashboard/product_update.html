@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Update Page {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <div class="border bg-white p-3">
+               <h3>Update Item</h3>
+               <hr>
+               
+               <form method="POST">
+                {% csrf_token %}
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        {{ form }}
+                    </div>
+                    <div class="form-group text-center">
+                        <a class="btn btn-dark" href="{% url 'dashboard-products' %}">Cancel</a>
+                        <input class="btn btn-danger" type="submit" value="Update">
+                    </div>
+               </form>
+           </div>
+       </div>
+    </div>
+</div>
+{% endblock %}

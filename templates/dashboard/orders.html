@@ -1,0 +1,41 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Orders {% endblock %}
+
+{% block content %}
+    {% include 'partials/topnav.html' %} 
+
+    <div class="container">
+        <div class="row my-4">
+            <div class="col-md-12">
+                <!-- Add content here -->
+            </div>
+            <div class="col-md-12">
+                <table class="table bg-white">
+                    <thead class="bg-dark">
+                        <tr class="text-white">
+                            <th scope="col">Product</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Ordered by</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Total Bill</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.product }}</td>
+                                <td>{{ order.product.category }}</td>
+                                <td>{{ order.order_quantity }}</td>
+                                <td>{{ order.staff.username }}</td>
+                                <td>{{ order.date }}</td>
+                                <td><a class="btn btn-success btn-sm" href="#">Bill</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

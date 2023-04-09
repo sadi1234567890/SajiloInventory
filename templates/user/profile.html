@@ -1,0 +1,58 @@
+{% extends 'partials/base.html' %}
+
+{% block title %}Profile Page{% endblock %}
+
+{% block content %}
+
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-dark text-white">
+          Profile Information
+        </div>
+        <div class="card-body">
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <th>Name:</th>
+                <td>{{ user.username }}</td>
+              </tr>
+              <tr>
+                <th>Email:</th>
+                <td>{{ user.email }}</td>
+              </tr>
+              <tr>
+                <th>Phone:</th>
+                <td>{{ user.profile.phone }}</td>
+              </tr>
+              <tr>
+                <th>Address:</th>
+                <td>{{ user.profile.address }}</td>
+              </tr>
+              <tr>
+                <th>Department:</th>
+                <td>{{ user.profile.department }}</td>
+              </tr>
+              <tr>
+                <th>Joined Date:</th>
+                <td>{{ user.date_joined|date:'F j, Y' }}</td>
+              </tr>
+              <tr>
+                <th>Total Leaves:</th>
+                <td>{{ user.profile.total_leaves }}</td>
+              </tr>
+              <tr>
+                <th>Attendance:</th>
+                <td>{{ user.profile.attendance }}%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
