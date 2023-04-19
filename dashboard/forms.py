@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, Order
+from .models import Product, Order, Invoice
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -11,8 +11,12 @@ class ProductForm(forms.ModelForm):
             'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
             'unit_price': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['product', 'order_quantity']
 
-class OrderForm(forms.Form):
-   class Meta:
-       model  = Order
-       fields =['']
+class InvoiceForm(forms.Form):
+    class Meta:
+        model = Invoice
+        fields = '__all__'

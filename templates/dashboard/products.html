@@ -17,7 +17,9 @@
                     
                     <div class="mt-4">
                         <input class="btn btn-dark btn-block" type="submit" value="Add Product">
-                        <input class="btn btn-dark btn-block" type="button" value="Scan QR Code" onclick="scanQRCode()">
+                        <!-- <input class="btn btn-dark btn-block" type="button" value="Scan QR Code" onclick="scanQRCode()"> -->
+                        <a class="btn btn-dark btn-sm" href="{% url 'scan' %}">Scan</a>
+
                     </div>
                 </form>
             </div>

@@ -8,9 +8,17 @@
                     <div class="card-body">
                         <form method="POST">
                             {% csrf_token %}
-                            {{ form }}
-                            <input class="btn btn-dark btn-block" type="submit" value="Make Request">
-                        </form>
+                            <div class="form-group">
+                              {{ form.product.label_tag }}
+                              {{ form.product }}
+                            </div>
+                            <div class="form-group">
+                              {{ form.order_quantity.label_tag }}
+                              {{ form.order_quantity }}
+                            </div>
+                            <button class="btn btn-dark" type="submit">Submit</button>
+                           
+                          </form>
                     </div>
                 </div>
             </div>
@@ -26,6 +34,7 @@
                                     <th scope="col">Product</th>
                                     <th scope="col">Category</th>
                                     <th scope="col">Quantity</th>
+                                    <th scope="col">Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,6 +44,7 @@
                                     <td>{{ order.product.name }}</td>
                                     <td>{{ order.product.category }}</td>
                                     <td>{{ order.order_quantity }}</td>
+                                    <td>{{ order.date }}</td>
                                 </tr>
                                 {% endif %}
                                 {% endfor %}

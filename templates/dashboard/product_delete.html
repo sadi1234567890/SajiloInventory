@@ -15,7 +15,9 @@
                 {% csrf_token %}
                     {{ form }}
                     <a class="btn btn-secondary" href="{% url 'dashboard-products'%}"> Cancel</a>
+
                  <input class="btn btn-danger" type="submit" value="confirm">
+
                </form>
            </div>
        </div>
