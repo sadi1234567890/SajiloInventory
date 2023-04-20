@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Product, Order, InvoiceBills, Invoice
+from .models import Product, Order, InvoiceBills, Invoice, Profile
 from .forms import ProductForm,OrderForm, InvoiceForm
 from django.contrib.auth.models import User
 from django.forms import formset_factory
@@ -140,6 +140,51 @@ def add_orders(request):
     }
     return render(request, 'dashboard/add_orders.html', context)
 
+
+
+def invoice(request):
+    if request.method == 'POST':
+        # Process the form data to create a new invoice
+        invoice_date = request.POST.get('invoice_date')
+        customer_name = request.POST.get('customer_name')
+        customer_phone = request.POST.get('customer_phone')
+        product_id = request.POST.get('product_id')
+        rate = request.POST.get('rate')
+        quantity = request.POST.get('quantity')
+        staff_id = request.POST.get('staff_id')
+        
+        # Perform validation checks on the form data
+        # ...
+        
+        # Create a new invoice object and save it to the database
+        product = Product.objects.get(id=product_id)
+        staff = Profile.objects.get(id=staff_id)
+        total = rate * quantity
+        invoice = Invoice.objects.create(
+            invoice_date=invoice_date,
+            customer_name=customer_name,
+            customer_phone=customer_phone,
+            product=product,
+            rate=rate,
+            quantity=quantity,
+            staff=staff,
+            total=total,
+        )
+        
+        # Redirect the user to a success page or display a success message
+        # ...
+    
+    else:
+        # Render the template for creating a new invoice
+        products = Product.objects.all()
+        staffs = Profile.objects.all()
+        context = {
+            'products': products,
+            'staffs': staffs,
+        }
+        return render(request, 'dashboard/invoice.html', context)
+
+
 # def createReceipt(pk):
 #     store_name= "Sajilo Inventory"
 
@@ -175,17 +220,18 @@ def add_orders(request):
 
 
 # def generateInvoice(request):
-#     form = InvoiceForm()
+ 
+ #      form = InvoiceForm()
 
-#     if request.method == 'POST':
-#         form = InvoiceForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, 'Invoice added successfully.')
-#             bill = Invoice.objects.latest('id')
-#             createReceipt(bill.id)
-#             # Add url here
-#             return redirect('invoice')
+  #     if request.method == 'POST':
+   #         form = InvoiceForm(request.POST)
+    #        if form.is_valid():
+     #         form.save()
+      #        messages.success(request, 'Invoice added successfully.')
+       #       bill = Invoice.objects.latest('id')
+        #        createReceipt(bill.id)
+                        # Add url here
+         #       return redirect('invoice')
 
 #     invoiceData = Invoice.objects.all()
 #     context = {'invoice_data': invoiceData}

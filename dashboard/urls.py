@@ -11,7 +11,7 @@ urlpatterns = [
     path('products/delete/<int:pk>/',views.product_delete, name='dashboard-product-delete'),
     path('products/update/<int:pk>/',views.product_update, name='dashboard-product-update'),
 
-    # path('invoice/', views.invoice, name="invoice"),
+     path('invoice/', views.invoice, name="dashboard-invoice"),
     # path('save', views.generateBill, name="generate-bill"),
     # path('search-prod', views.searchProd, name="search-prod"),
     # path('search-invoice', views.searchInvoice, name="search-invoice"),
